@@ -1,0 +1,49 @@
+:Base War-FTPd.hlp>war
+:Title WAR FTP DAEMON
+1 About FTP
+1 War FTP Daemon
+2 About the WAR FTP DAEMON
+3 Introduction=intro
+3 License agreement=license_agreement
+3 Specifications=specifications
+3 Design=design
+3 The Virtual File System=vfsys_intro
+2 Dialogs
+3 The System Console=HIDD_TFTPD32_DIALOG
+3 The Menu=menu
+3 The Options tab=menu_options
+3 The Security tab=HIDD_USERDLG
+3 View the Virtual file System=HIDD_VFSYSVIEWDLG
+3 System Messages=HIDD_SYSMSGDLG
+3 Macros=macros
+3 Import Serv-U Database=import_servu
+3 Bug report=bugreport
+2 Reports
+3 Up/Download Statistics=HIDD_UDSTATDLG
+3 Login Access=access_report
+3 Root and Home directories=home_report
+3 User Paths=path_report
+3 Password Properties=passwd_report
+2 Files and file formats
+3 Introduction=files
+3 User database=file_userdb
+3 The War Log file format=log
+3 The Wu-ftpd log file format=wu_ftpdlog
+3 The physical .Index.txt file=files_index_ph
+3 The virtual .Index.txt and .SysIdx.txt=files_index
+2 Technical articles
+3 Links=links_intro
+3 The LIST command=list_format
+3 Log=log
+3 Running multiple servers on the same machine=multiple_servers
+3 Multihoming=multihoming
+3 Running War as a NT service=HIDD_ST_NT
+3 The CHMOD (SITE) command=chmod_explained
+3 The File Security in War=file_access_security
+2 Utilities
+3 ProcessZip.exe=processzip_exe
+3 UnZip.exe=unzip_exe
+1 RFC Documents
+2 RFC 959 FTP Protocol specs=rfc959index
+2 RFC 1123 FTP revision=rfc1123
+2 RFC 1700 Assigned port numbers=rfc1700

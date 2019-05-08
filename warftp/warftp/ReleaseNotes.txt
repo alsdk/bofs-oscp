@@ -1,0 +1,2070 @@
+RELEASE NOTES
+
+WAR FTP DAEMON for Win95/NT
+Get the latest update at: http://www.jgaa.com
+
+I have now started to work on the next major version (2.0)
+of the server. Almost all the code will be rewritten to
+improve the design and flexibility, and to make it even faster
+to add new features.
+Because of this there will not be more features in the
+current major versioin (1.*), but bugfixes will be done
+until version 2.0 is released.
+
+Please join the newsgroup alt.comp.jgaa if you want to discuss
+the features and be up to date on the development of version 2 :-)
+If your news provider dont carry this group today, make a call
+and ask them to. It will normally take only a day or two before
+they open it.
+
+You can also join the warftpd mailing list or update notification
+lists. Send a mail to info@jgaa.ldp.no (auto-responder) for more
+information.
+
+
+KNOWN PROBLEMS
+ 
+	The server does not work with the current version
+	of Trumpet Winsock for Win95.
+
+	The user interface does not look very good under NT 3.51.
+	The menu are overwritten by the toolbar, and sometimes the
+	list boxes will not be visible. These problems will be
+	resolved in version 2.0.
+
+	NT SERVICE:
+
+		* The service will hang if you use a user account
+		  that is not in the NT "administrator" group.
+
+		* You will not be able to log out from the console
+		  without stopping the service if you have the
+	 	  SITE SHOW option enabled. (Options/NT tab).
+		  This is due to a bug in MFC. I have not found a
+		  work-around.
+		  If you need to have the server auto-start when the 
+		  system boot, *and* need the SITE SHOW option enabled,
+		  stop the service and reboot rather than logging out.
+
+		* I have experienced a few times that it has been impossible
+		  to log in to NT 4 with the same user account that caused
+		  the server to crash (when I logged off and the SITE SHOW
+		  was enabled). To reset the user environment (and enable
+	  	  NT login), log on to NT as another user with ADMINISTRATOR
+		  privilegies and load/save the user in the NT User Manager.
+		  This will clean up the mess (probarbly somewhere in the
+		  registery) and solve the problem.
+		  This looks like a NT 4 bug to me...
+
+	The server will crash rather than playing sounds on some (NT 3.51 ??)
+	systems. If the server is unstable, disable the sound option
+	(Options/Sound tab).
+
+-------------------------------------------
+V. 1.65 Release version Apr. 24 1997
+-------------------------------------------
+
+ADDED	Option to handle brain dead ISP's.
+	Some ISP's deny use of FTP servers for their PPP
+	users. You can now bypass this restriction by
+	using another port than 21, and check the "Fool 
+	brain dead ISP's" checkbox in /Options/FTP
+
+ADDED	New method for multimoming/mutlihosting. Previous
+	versions of War FTP Daemon handled this by adding
+	@ipNum after the user names. This still works, but you
+	can now also set up several instances of the server
+	on the same machine, each listening to different IP
+	numbers (the IP numbers must be assigned to the machine).
+	Use the /Options/Serber Name/Limit access... field to
+	enable this.
+	Note: Each virtual server must be installed in it's own
+	directory, and VfSys paths (if used) must _not_ overlap.
+
+CHANGE	The startup therad for the server is now processing messages
+	from the operating system. (Since the server can be used as a 
+	NT service, the startup thread is not used by the server.)
+	This will prevent some problems when programs broadcast messages
+	to all running programs and expect an answer.
+
+BUGFIX	sysmsg@Ipname.txt files was not shown correctly on
+	multihoming systems.
+	Fixed.
+
+BUGFIX	On some systems the Options dialog did not work.
+	Fixed.
+
+-------------------------------------------
+V. 1.63x Experimental version Apr. 22 1997
+-------------------------------------------
+
+ADDED	Option to disable write protection on files open for
+	FTP send. (See Options/FTP)
+
+
+-------------------------------------------
+V. 1.62 Release version Apr. 20 1997
+-------------------------------------------
+
+BUGFIX	Resume was broken when files was copied from CD-ROM.
+	Fixed.
+
+-------------------------------------------
+V. 1.61 Release version Apr. 19 1997
+-------------------------------------------
+
+Several bugs are traced and fixed. The server should now be unable
+to crash on release versions of Windows95 and NT. There are reported
+a few problems with Memphis and NT 5. I have asked Microsoft to provide
+me with copies of these systems in order to trace and fix this.
+
+The installastion script in 1.55 had a problem where some system dll's was
+removed in the Windoes system directory and replaced with copies in the 
+server install dir. This is now fixed, so that new system dll's are copied
+to the Windows system directory.
+
+ADDED	Option to copy files from CD-ROM and network drives to a local temp
+	dir before transmitting the file. (This has been on the "most wanted
+	features" list for a while.)
+	The server will start a new therad to perform the copying the first
+	time the copy operation is needed. This thread will serve all requests
+	to copy a file from a slow drive to a temp dir. This design ensures that the
+	server will handle all ongoing transfers at full speed, and also ensure
+	that only one file is copied from a CD-ROM drive or CD-ROM changer (jukebox)
+	at one time. Copying more than one file from a CD-ROM will slow down the
+	performance significantly. The one-file-at-the-time design will also 
+	reduce the load on the local network when files are copied from other
+	machines prior to download.
+	As soon as the file is copied, the transfere starts at full speed from
+	the local harddisk.
+
+ADDED	Command to abort an ongoing file transfer from the server console.
+	Right click on the user and select "Stop transfer". No confirmation dialog
+	will pop up. If a transfer is open it will be aborted.
+
+ADDED	Macros in the log file name. See the help section about the log
+	file for details.
+
+-------------------------------------------
+V. 1.60x Experimental version Mar. 31 1997
+-------------------------------------------
+
+BUGFIX	The firewall support caused WSAEADDRINUSE error
+	messages, and problems with opening the data connection.
+	Fixed.
+
+-------------------------------------------
+V. 1.59x Experimental version Mar. 31 1997
+-------------------------------------------
+
+BUGFIX	The spy option did not work in 1.57/58
+	Fixed
+
+-------------------------------------------
+V. 1.58x Experimental version Mar. 29 1997
+-------------------------------------------
+
+BUGFIX	A few UNKNOWN EXCEPTION's are removed
+
+BUGFIX	A missing assignment to port 20 on the server side of file
+	transfers caused problems with firewalls.
+	Assumed fixed.
+
+-------------------------------------------
+V. 1.56x Experimental version Feb. 17 1997
+-------------------------------------------
+
+ADDED	ODBC logging. The ODBC log feature adds an option to log
+	file transfers to an MS-SQL server through an ODBC 
+	connection. You must have MS-SQL server installed before
+	you enble this option.
+
+	Steps to install the ODBC log feature:
+
+	1) Copy CODBCLog.dll into the War FTP Daemon directory
+	2) Modify ODBCLog.ini to your preferences.
+
+		[ODBC]
+		Database=WarLog
+		Table=LOG
+		DoCreate=1
+		User=sa
+		Pwd=
+		ODBC name=WarFTPD
+
+	3) Create a new empty SQL database, with the name you have
+	   choosen as "Database".
+	4) Create a new ODBC definition on the machine running the
+	   FTP server with the name you have choosen as "ODBC name".
+	   Set the "default database" to the name of the database.
+	5) Make sure that the SQL user name and password in the  .ini
+	   file are valid.
+
+	Start the War FTP Daemon. The FTP server will try to create a new
+	table named "LOG" in the fresh database each time it start's up,
+	until the table is created. It will then automatically set the
+	flag "DoCreate" to 0. 
+
+	In order to remove the option, simply delete the file CODBCLog.dll.
+
+ADDED	Better protection against GPF problems. The server should now be
+	unable to crash. If a fatal error occur, the session that cause the
+	error might halt (from the users point of view), but the server should
+	remain online. Memory is not released when fatal error occurs, so this
+	can lead to a significant "memory leak" over some time.
+	If you see complaint's in the server log about CAUGHT UNKNOW EXCEPTION ...
+	restart the server or (if possible) reboot the machine. The error
+	handler is ment to keep the server alive until an operator can deal
+	with the problem, not as a solution to run a faulty system over a long
+	period of time.
+
+
+-------------------------------------------
+V. 1.55 Relese version Feb. 11. 1997
+-------------------------------------------
+
+ADDED	Support for async chat when used with the War FTP Client.
+
+	Implementation details: Async chat is enabled with the
+	SITE CHAT MODE=ON PROTOCOL=ASYNC REPLYCODE=nnn where nnn
+	is a number in range 200 - 299.
+	When enabled, the server send messages to the FTP client
+	as they apper, without delay, as normal command replies.
+	The message is identified by the number 'nnn'.
+	It is the responsibility of the FTP client to choose
+	a unique number so that it can seperate chat lines from
+	normal command replies.
+
+ADDED	SITE PASS <new password> command. This allow users to 
+	change their passwords online.
+
+BUGFIX	If a password was changed on a user account imported from
+	Serv-U, the password autentication would fail.
+	Fixed.
+
+-------------------------------------------
+V. 1.54x Relese version Jan. 10. 1997
+-------------------------------------------
+
+ADDED	Command line option to change the physical paths in
+	all the users FileAccess tab. This option is designed
+	to be used after the physical layout of the file
+	system has changed, like when you have added a new
+	disk drive.
+
+	Syntax: war-ftpd -ReplacePathFrom C:\ -ReplacePathTo F:\
+
+	The sample above will replace *all* user paths starting with
+	C:\ with F:\. C:\pub\ftp will i.e. now be F:\pub\ftp. The server
+	does not do any validiation of thhe changes.
+
+	If you just use the -ReplacePathFrom without -ReplacePathTo,
+	any path matching the ReplacePathFrom argument will be permanently 
+	removed from the internal lists.
+
+	MAKE A BACKUP COPY OF WARFTPDAEMON.DAT BEFORE YOU USE THIS
+	OPTION. THE CHANGES WILL BE PERMANENT.
+
+	The code below shows the implementation of this feature:
+	(You don't need to understand the code in order to use
+	this feature, but c++ programmers will get a better
+	understanding of thow it works by looking at the code.
+
+	if (SubstOldPath.GetLength())
+	{
+		if (!strnicmp(Me.m_Path, SubstOldPath, SubstOldPath.GetLength()))
+		{
+			if (SubstNewPath.IsEmpty())
+				continue; // Path is to be deleted.
+			
+			LPCSTR p = Me.m_Path;
+			p += SubstOldPath.GetLength();
+			CString cBuf;
+			cBuf = SubstNewPath;
+			cBuf += p;
+			Me.m_Path = cBuf;
+		}
+	}
+
+
+
+ADDED	Temporary user accounts. This feature is designed
+	to be used with automation tools, (like a CGI) to
+	allow one-time-access to files. It was originally
+	developed for the distribution of the War FTP Daemon
+	version 2 source code. In that case a CGI bin is called
+	from a web page. The CGI creates the temporary user
+	account and redirects the browser to the ftp server.
+	The benefit with this method is that warez traders can not
+	trade a FTP account. The account will be deleted the first
+	time it is used. The code below demonstrates how to use this 
+	feature:
+
+	// Create tmp alias
+	char buf[32], *p;
+	int len = 16;
+	p = buf;
+	srand( (unsigned)time( NULL ) );
+	while(len)
+	{
+		i = rand();
+		if (isalpha((i & 0xff)))
+		{
+			*(p++) = (char)(i & 0xff);
+			--len;
+		}
+	}
+	buf[16] = 0;
+
+	WritePrivateProfileString("tmp Alias", buf, "TheRealUserName","WarFtpdAlias.ini");
+	Sleep(1000);
+
+	printf("HTML/1.1%cLocation: ftp://%s:password@you.ftp.com/warsrc.zip%c%c%c",10, buf, 10,10,10);
+
+	As you might spot, the "tmp" userid is actually just a 
+	temporary nick to a real (permanent) user account. 
+	However, the FTP user will never know the identity
+	of this account (unless you expose it by using the userid
+	in some macro whne th euser logs on, or if you enable the
+	SITE WHO command.
+
+	The ini file will be created automatically in the windows system 
+	catalog if you use the code above. This is also where the server
+	will look for it.
+
+
+
+-------------------------------------------
+V. 1.52 Relese version Oct. 28. 1996
+-------------------------------------------
+
+BUGFIX	If a user was kicked with the "ban IP" option checked
+	before he had logged on, the server would crash.
+	Fixed.
+
+-------------------------------------------
+V. 1.51 Relese version Oct. 28. 1996
+(Upgrade from 1.50 only)
+-------------------------------------------
+
+CHANGE	ABOR will now send file xmit termination message
+	if a file transfer is open.
+
+CHANGE	The server will now recognize Fetch's ABOR sequence.
+
+BUGFIX	2 bugs that caused GPF is fixed.
+
+-------------------------------------------
+V. 1.50 Relese version Oct. 24. 1996
+-------------------------------------------
+
+
+ADDED	Option to mount network drives when the server runs as a
+	NT service.
+
+ADDED	$g (group name) and $c (class name) macros to the upload
+	verification module.
+
+ADDED	To help the ppp users to announce their current IP number,
+	the server will write the IP number reported by
+	Winsock to the file "CurrentIPNumber.txt" each time it
+	goes online.
+
+UPDATED	Online help.
+
+CHANGE	The server will not accept more than 5 ls therads. This
+	is done to avoid a MS bug in WaitForMultipleObjects()
+	that else would generate a huge memory leak.
+	This will not affect the performance of the server, unless
+	5 or more users are issuing recursive directory listings
+	at the same time.
+
+BUGFIX	Code is borrowed from version 2 of the server to prevent a rare
+	GPF failure when users disconnect while up/download is in
+	progress.
+
+BUGFIX	The connection counter was decrementing by one if a user was
+	denied by absolute IP. That would lead to negative connection
+	numbers.
+	Fixed.
+
+BUGFIX	Fixed a bug in the Serv-U import filter that would lead to
+	"Access denied to home directory" errors.
+
+	Note: You must still verify the File Access tab for each
+	user/group imported as War sometimes creates duplicate
+	entries.
+
+BUGFIX	The timezone conversion functions sometime caused illegal
+	dates on virtual files. This could confuse Cute-FTP so that
+	the files was not displayed in the directory listing.
+	Fixed.
+
+BUGFIX	(NT) The event log will now resolve the correct message text.
+
+BUGFIX	The server could in some situations close incoming file transfers
+	before the files were completly uploaded.
+	Fixed.
+
+BUGFIX	Resume of upload should now work.
+
+
+-------------------------------------------
+V. 1.32x experimental BETA Oct. 15. 1996
+-------------------------------------------
+
+The server now use the MSVC 4.2b with update patch from MS. This
+includes new dll's. (again...)
+
+ADDED	SITE SHOW command to display the server console when the
+	server is running as a system service under NT. The server
+	must be configures to run in "Interactive" service mode
+	for this to work, and NT must allow interactive services.
+	This new command can be used to configure the server when
+	it runs as a service.
+
+	Note: You must log in to the server from a FTP client
+	as a FTP user in the class "sysadmin". Then issue the
+	QUOTE SITE SHOW command (or define a custom command
+	if you use Cute-FTP) to bring up the server console.
+
+	THE SERVER WILL NOT DISPLAY THE TASKBAR ICON. This is
+ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	done by purpose since the service don't "belong" to the
+	user currently logged on to the NT desktop.
+
+BUGFIX	I traced down a bug in the pattern matching function that
+	might be the cause of the reported problems with banned
+	files and upload verification. I *hope* this is fixed.
+
+BUGFIX	In 1.31x the server would not report the correct number
+	of users online.
+	Fixed.
+
+-------------------------------------------
+V. 1.31x experimental BETA Sept. 29. 1996
+-------------------------------------------
+
+The server now use the MSVC 4.2a with update patch from MS. This
+includes new dll's.
+
+
+BUGFIX	Now allows '@' in user names to allow multihoming
+	users (was disabled a few releases ago...)
+
+TESTED	I had a report that banned files did not get banned,
+	ie. *.txt in the banned list would still allow text
+	files to be uploaded.
+	I found no bugs here. Make sure that banned files
+	are added to the correct level. If you ban file names
+	on user "garfield", the banning will only apply for
+	this user. In general, banned files should be
+	defined on the "default" level.
+
+TESTED	There is reported to be a memory leak in 1.30x. I have
+	not been able to find any such leak, so it might be
+	bugs in the MFC libraries. The libraries are updated
+	in 1.31x. The only known memory leak are a due to a
+	bug in MFC when a thread is waiting for more than 
+	8 events. This can be avoided by using 5 or less
+	ls-threads.
+
+-------------------------------------------
+V. 1.30x experimental BETA Sept. 17. 1996
+-------------------------------------------
+
+I have tried to track down a bug that cause the server to
+crash in the sockets subsystem - with no luck.
+To help out some of you that are waiting for the bugfixes
+below I release this version now. New versions with more
+features and improvements can be expected in the *near*
+future.
+
+
+ADDED	Option to turn reverse DNS lookup on/off. (It is set
+	off by default).
+
+CHANGE	Now using MSVC++ 4.2. Several new dll's in the
+	distribution.
+
+CHANGE	The server will now use the *modification* date
+	as file date. In previous versions it used the
+	creation date.
+
+BUGFIX	Deletion of files sometimes failed when the 
+	virtual file system was used because the server
+	forgot to delete empty .Index.txt files.
+	Fixed.
+
+BUGFIX	The server would shut down file transferes if the
+	"Go offline when ready" button was pressed.
+	Fixed.
+
+BUGFIX	Sometimes the server would move files into the
+	servers home directory when it was told to
+	*rename* the file.
+	Fixed.
+
+BUGFIX	Some fixes in VfSys when loading/flushing empty
+	directories.
+
+BUGFIX	War would not show directories/files if the
+	first file/dir in a directory was denied
+	to the user due to UNIX/VfSys permissions.
+	Fixed.
+
+------------------------------------------
+V. 1.29x experimental BETA August 4. 1996
+------------------------------------------
+
+ADDED	ls -d option to support ncftp "get -R"
+
+ADDED	Copy User and Rename User in the Security
+	tab (User maintainance).
+	Copy User will create a new user with
+	all the properties of the selected user,
+	except username and password.
+
+ADDED	Auto-rescan option for VfSys to ease dupe 
+	checking on systems where files	might be added 
+	from other applications (like BBS systems).
+	The scanning will be done in a defined
+	time interval, and only when no users are 
+	listing directories.
+	Note: During the rescan the server will
+	"hang". I could have added a thread to
+	do the scanning, but the disk/IO is so intense
+	during this operation that another tread would
+	just have slowed down the overall performance.
+
+ADDED	[$dirmsg] macro to display the directory change
+	message. This macro is automatically called when
+	the user log in and when he change directory.
+
+CHANGE	Help via F1 was disabled in release 1.26x.
+	It is now re-enabled.
+
+CHANGE	Usernames are now restricted to 'a' - 'z' and
+	'0' - '9'. Other letters will be refused.
+	The current user database is not affected.
+
+CHANGE	If the "Go offline when ready" checkbox on the 
+	console is checked the user will be logged off
+	as soon as the current file transfer is
+	completed.
+
+CHANGE	When the Upload Veryfier renames a file, it is 
+	now updated in VfSys.
+
+CHANGE	If a user is rejected due to a banned IP address
+	he will now be thrown off after the password is
+	given with a "Bad Password" message.
+	This makes it a little harder for the hackers
+	to determine how they should proceed :-)
+
+BUGFIX	The Pattern mathing function failed when
+	the pattern was set to *.zip and the path
+	contained a . character.
+	This bug could affect the Upload Verification
+	module, the Banned File and the Dupe Checker.
+	Fixed
+
+BUGFIX	Sessions that "hangs" after a user has lost
+	his connection while up or downloading are
+	was not timing out.
+	Fixed.
+
+BUGFIX	The "mysterious" N4 (and Nt 3.51) bug where
+	the server crashed on some system when the
+	DIR command was given in the root directory
+	is found and fixed.
+	
+
+----------------------------------------
+V. 1.28x experimental BETA July 24. 1996
+----------------------------------------
+
+CHANGE	I did a little testing on NT with different thread
+	priorities to optimize performance when several 
+	large directory listings were built.
+	The best overall performance was achieved by 
+	lowering the priority of the threads that build
+	the directory listings whenever they kept the
+	shared data segments of VfSys unlocked. I
+	raised the priority whenever they accessed shared
+	memory to avoid situations where the main
+	thread would block, waiting for write access
+	to VfSys and one ore more lower priority threads
+	kept a read lock on it but was blocked by NT,
+	waiting for higher priority processes to 
+	complete their work.
+	So the new design is:
+
+	  Main thread
+           |
+           | Request data and continue with other users
+           |
+           v
+          Ls thread
+           |
+          Lower proirity and initialize
+           |
+           +-> Raise priority
+     loop      Get VfSys Data for one directory
+           +-< Lower priority
+           |
+          Make a nice looking directory listing
+           |
+          Send a notification to the main thread about the 
+          completion of the request
+           |
+          Raise priority
+          Loop back to start and wait for new requests.
+
+	This gave an acceptable performance with NT on a 
+	single CPU system, and will probarbly boost
+	performance on a multiprocessor system.
+
+	Windows95 did not like to change the
+	priority all the time. I guess that the kernel 
+	code for this is *very* inefficient, involving 
+	physical memory transfers and relinking of the
+	threads protected memory data, and several
+	context switches. The performance fell by
+	~1000% on my worst case test.
+
+	This might be fixed in future versions of Win95, so
+	I have added options to set the number of ls threads
+	and "Optimal", "Mixed" and "Fixed" priority. This
+	option is located in the File System Options tab.
+	
+	  Mixed    - NT Mode where the priority is changed
+	  Fixed    - The priority remains the same as the
+                     main therad.
+          Optimal  - A qualified guess made by the server 
+                     on what to do - based on the actual
+                     operating system and version.
+
+	The number of ls therads are the maximum number the
+	server will use. When it start up it initialize one
+	thread. When a user issues a LIST command the server
+	checks if there are idle ls threads. If one (ore more)
+	threads are idle, it gets the request.
+	If no threads are idle (all are processing LIST commands)
+	the server checks if it can initiate a new therad and 
+	does so if the number of ls threads are less than the
+	defined maximun.
+	If the maxuimun number of ls threads are running, it
+	checks how many pending requests there are on each
+	thread, and if they perform a simple or recursive
+	directory listing. It then queues the request to the
+	thread that most likely will finish it's current tasks
+	first and continue processing on other users.	
+	(The "hold" state of the user in the user list can
+	mean that the user has a pendinng reuest on a ls
+	thread).
+
+	In the current version I have set the system defined
+	maximum to 30 threads. The server can handle up
+	to about 60 threads with the current design, but too
+	many threads will add a significant overhead both in
+	NT and in the servers locking functions for shared
+	memory.
+	There is also a bug in the Microsoft SDK that leads
+	to a small memory leak if more than 8 therads places
+	a read lock on a shared data segment, and one therad
+	waits for write access. (WaitForMultipleObjects).
+	The number of LS threads should therefore be 5 or
+	less.
+
+
+CHANGE	I had reported that the server "froze" under 
+	Win95 when large partitions were loaded
+	into VfSys and VfSys was shut down.
+	The problem turned out to be a bug in Win95
+	when allocating large number of memory buffers.
+	Windows 95 simply ran out of system resources
+	and was unable to release the buffers. In stead
+	it froze the server, and then other programs
+	as well.
+	I performed a benchmark with ~26,000 files and
+	verified the problem.
+	I rescheduled the memory optimizing of VfSys 
+	and implemented my own memory allocation 
+	functions. As a result large partitions works 
+	fine with Win95 and memory usage is reduced by 67%.
+	Under NT the operating system used 10,400 KB
+	to store the 26,000 file names and the global
+	data segments for the server.
+	With my memory functions this was reduced to 
+	3,432 Kb.
+	It also gave a nice side effect of even faster
+	loading of the VfSys:
+
+	Load VfSys in version 1.26x 95940 ms (95.9 sec)
+	Load VfSys in version 1.27x 45135 ms (45.1 sec)
+	Load VfSys in version 1.28x 24015 ms (24.0 sec)
+	
+
+----------------------------------------
+V. 1.27x experimental BETA July 23. 1996
+----------------------------------------
+
+ADDED	Support in VfSys to handle comments and UNIX
+	attributes on read only directories and drives
+	(CD-ROM).
+
+CHANGE	VfSys can now be used when War is running as a 
+	NT Service. The shutdown function has support
+	for fast shutdown and will in most cases 
+	complete the shutdown process in a few seconds.
+	(Normal shutdown is a little slower as it will
+	release all used memory and other resources.)
+
+CHANGE	Optimized the Virtual file system. Reduced load
+	time by ~50% and decreased flushing time from 
+	several minutes (worst case) to ~ 10 - 100 ms.
+
+	The following benchmark is performed on a Intel
+	Pentium 120 MHz based standard clone PC with
+	2 x Quantum Fireball IDE 1.3 GB drives and 48 MB
+ 	RAM running NT 4.0 Server. 
+	(25968 files in 1107 directories loaded)
+
+	Load VfSys in version 1.26x 95940 ms (95.9 sec)
+	Load VfSys in version 1.27x 45135 ms (45.1 sec)
+
+	Also reduced memory usage and memory fragmentation
+	when running VfSys.
+
+----------------------------------------
+V. 1.26x experimental BETA July 21. 1996
+----------------------------------------
+
+ADDED	NT Service support.
+	The server can now run as a native Windows Nt service.
+	This feature is still at an early stage. I just wanted
+	to know if this service implementation is so hard to
+	do as people claim. It is not. The current
+	implementation was done in just a few hours :-)
+
+	In order to run it as a server, follow these steps:
+
+	  1) Log in to NT as *Administartor*.
+	  2) Start the server as usual.
+	  3) Open the Options/NT tab.
+	  4) Select startup mode and (optionally)
+	     an user account.
+	  5) Press the [Update] button.
+          6) Exit War.
+
+	War will now be configured as a service. You can
+	start it from the Service Manager. It support the
+	following Service Manager commands:
+
+	  Start     - Starts up	
+	  Stop      - Logs all users off and terminates
+	  Pause     - Goes offline
+	  Continue  - Goes online
+
+	Limitations/bugs:
+
+	  There is no way to access or configure the server when it 
+	  is running as a service. 
+
+	  DO NOT USE VFSYS WHILE RUNNING IN SERVICE MODE. VFSYS
+	  USES TOO LONG TIME TO FLUSH THE BUFFERS WHEN THE MACHINE
+	  SHUTS DOWN. You can use VfSys if you manually stop the
+	  server before shutting down the machine.
+
+	  No control panel applet is available at the moment.
+
+	  The Event Log messages make no sense at the moment. 
+	  However, both the regular log and the WU-FTPD log are
+	  all right.
+
+	Notes:
+
+	  When War is installed as a service it will try to start
+	  as a service also when started as a normal application. 
+	  This gives a delay of ~30 seconds from you start War
+	  until it shows up.
+
+	  In order to confugure War when it is running as a service, 
+	  go to the Service Manager in the control panel and stop
+	  "WAR-FTPD". Then you can start the server as usual and
+	  do the configurations. When you are done, terminate War
+	  and start it again as a service from the Service Manager.
+	  
+ADDED	Telnet command recognition in the FTP command parser.
+	This option is added to handle FTP clients that prefix
+	the ABOR command with Telnet codes.
+
+BUGFIX	When running vfsys the Free Diskspace option always reported
+	"Low on free diskspace".
+	Fixed.
+	
+
+----------------------------------------
+V. 1.25x experimental BETA July 20. 1996
+----------------------------------------
+
+BUGFIX	Minor bugfix in the modified pattern matching
+	module.
+
+
+----------------------------------------
+V. 1.24x experimental BETA July 20. 1996
+----------------------------------------
+
+ADDED 	UNIX WU-FTPD compatible log file in addition
+	to the current War log file.
+	There should be tons of scripts available
+	to process this new log file and make all
+	kind of fancy reports :-)
+
+ADDED 	[$diskfree] macro. Reports free KB on the
+	(users) current drive.
+
+ADDED	test for free diskspace before accepting
+	upload. The requiered free space can be set in
+	the File System options tab.
+
+ADDED	Copy option to the Upload Verification
+	dialog.
+
+CHANGE	Modified the Path report to mark *all* inactive
+	paths as inactive, not just the paths unresolved
+	by VfSys.
+
+CHANGE	Modified the path parser to support non-mapped
+	paths if a parent path is mapped.
+	   C:\                     +root +home +map
+           D:\ftp                  +map
+           D:\ftp\incoming
+	The incoming directory will now be recognized
+	as /ftp/incoming and the attributes will apply.
+	In previous versions, each path that was defined
+	ouside the root path had to be mapped to root.
+	Note: If you want to give access to a path
+	outside the users root path, the lowest level path
+	still *has* to be mapped. 
+	War woun't allow any absolute paths ouside the root
+	path.
+
+CHANGE	The entire source code (all 26.735 lines)
+	was reviewed and partially modified to
+	handle a MSVC++ 4.1 code generation
+	error that can cause GPF's.
+
+CHANGE	The log dialog is moved to the Options tab.
+	The dialog is also modified.
+
+CHANGE	Change in LIST parameter processing.
+	The LIST command will now always use
+	long listing format, also if the user
+	specify -1 or -C on the command line.
+	This is not logical, but comforms with
+	the behavior on UNIX servers.
+	Use the NLST (ls) command if you want
+	to use short or multicoloumn format.
+
+BUGFIX	When only 1 session was allowed on a user 
+	account, pr. IP, the user was denied login
+	even if he was not previously logged on.
+	Fixed.
+
+BUGFIX	The server was a little paranoid with the
+	X:\ root directory. If a drive root was
+	the root path for a user, the user was
+	denied access to any subdirectory.
+	This bug was introduced with the 1.03x
+	version.
+	Fixed.
+
+BUGFIX	In version 1.23x a new bug was introduced:
+	Mapped dirs was displayed several times.
+	Fixed.
+
+BUGFIX	A dead lock situation was detected when
+	manualy restarting VfSys while there was
+	users online, and they performed directory
+	listings.
+	Fixed.
+
+BUGFIX	The console sometimes claimed to be "offline"
+	just after the server was started, and
+	it actually was "online".
+	Fixed.
+
+----------------------------------------
+V. 1.23x experimental BETA July 18. 1996
+----------------------------------------
+
+ADDED	More threads on slow IO. Up to 6 threads can now work
+	together to speed up slow IO access upon directory listings,
+	in addition to the two primary processing threads (that 
+	never perform any slow IO operations, except when they
+	flush VfSys or the user database).
+
+CHANGE	Internal design change in the locking scheme for multithread
+	access to shared memory. The new scheme taks a little more 
+	CPU usage, but make the server run significatly faster when
+	there are many users online.
+
+BUGFIX	A dead lock situation was detected. The server could go into
+	a "dead lock" when two threads incrementally placed
+	a lock on the same objects.
+	Fixed.
+
+----------------------------------------
+V. 1.22x experimental BETA July 16. 1996
+----------------------------------------
+
+ADDED	Upload verification processing script option.
+	The server can now start external programs to
+	perform CRC checks (or other validiation) on
+	incoming files prior to accepting the file.
+	It can also extract file_id.diz or perform other
+	processing on the incoming file.
+
+BUGFIX	A minor bug in the low level read function that
+	reads the fields in the user database was detected
+	and fixed.
+
+----------------------------------------
+V. 1.21x experimental BETA July 13. 1996
+----------------------------------------
+
+ADDED 	Import of Serv-U database.
+
+----------------------------------------
+V. 1.20b BETA July 11. 1996
+----------------------------------------
+
+ADDED	Contents file to the online help.
+
+BUGFIX	The dupe checker was a little paranoid
+	and refused files that was defined in
+	the dupe exception list without a 
+	leading *.
+	Fixed.
+
+----------------------------------------
+V. 1.04x experimental BETA July 10. 1996
+----------------------------------------
+
+ADDED	Installation program with the distribution
+
+BUGFIX	REST (resume command) did not always reset
+	the start offset to 0 after the transfere,
+	or when the FTP client did not initiate a
+	transfer immediately.
+	This bug caused incompatibility with Cute FTP
+	version 1.5.
+	Fixed.
+
+BUGFIX	An error recovery function in the file send
+	module caused the server to crash.
+	Fixed.
+	
+
+----------------------------------------
+V. 1.03x experimental BETA July 9. 1996
+----------------------------------------
+
+ADDED	Disable banner checkbox in the welcome dialog.
+
+CHANGE	The format of the physical .Index.txt file has
+	changed. See the online documentation for
+	details.
+
+BUGFIX	Netscape failed to download files from the root
+	path when the Virtual File System was running,
+	and the physical directory not was assigned to
+	a logical name.
+	Fixed.
+
+BUGFIX	The [$credit] macro did always show the KB
+	ratio relation, also when the Up/Download
+	mode ws set to files.
+	Fixed.
+
+BUGFIX	If user or class was changed from the View Virtual 
+	File System dialog, the new data was not always 
+	saved.
+	Fixed.
+
+BUGFIX	When running the Virtual File System, directories
+	was not physically deleted when a user sent a
+	DELE command.
+	Fixed.
+
+BUGFIX	If the Virtual File System was restarted while
+	a user was uploading a file, the file would appear
+	twice in the directory listing sent to the
+	user.
+	Fixed.
+
+BUGFIX	A minor security problem was reported.
+	Fixed.
+
+BUGFIX	It was not possible to edit an alias name in
+	the FILE ACCESS TAB if the original directory
+	name was only one character long.
+	Fixed.
+	Note: Alias names *must* be 2 or more charactres
+	long. If a name is invalid, the server will 
+	change it to a valid name.
+
+BUGFIX	The server would crash if a pathnames was
+	too long.	
+	Fixed.
+
+BUGFIX	Multi-segment lines made the server strip
+	off command parameters.
+	Fixed.
+
+----------------------------------------
+V. 1.02x experimental BETA July 7. 1996
+----------------------------------------
+
+BUGFIX	When running the virtual file system, deleted
+	files would not always be physical erased
+	from the disk, althoug they appered to be
+	deleted in the servers directory listings.
+	Fixed.
+
+BUGFIX	When the virtual file system was running,
+	it was not possible to upload files to
+	the first directory level in the root path.
+	Fixed.
+
+BUGFIX	CD .. would in some situations give
+	"Permission denied" when issued from a
+	mapped directory.
+	Fixed.
+
+----------------------------------------
+V. 1.01x experimental BETA June 28. 1996
+----------------------------------------
+
+ADDED	Dupe exceptions in the Banned Files tab.
+
+ADDED	Account session time limit
+
+ADDED	Max simultaneous logins for an account based on
+	the callers IP number. You can now allow 30
+	anonymous users, but only 1 or 2 sessions for
+	each physical user.
+
+ADDED	Options/File System Options
+	Links are now shown as files by default (ls -L). This
+	option can be turned off.
+
+CHANGE	The system options on the main console will no longer
+	be hidden if the console is resized.
+	
+BUGFIX	When VfSys was running and the root directory was
+	somewhere down the path, and mapped, the command
+	CD /SOMEDIR could fail.
+	Fixed.
+
+------------------------------
+V. 1.0b BETA June 23. 1996
+------------------------------
+
+
+ADDED	Help.
+
+BUGFIX	WEB browsers had problems listing directories
+	on sites that diod not use the Virtual File 
+	System.
+	Fixed.
+	
+
+------------------------------
+V. 0.19a ALPHA June 21. 1996
+------------------------------
+
+I have now fixed all reported bugs that I have been able
+to reproduce. Please report any problems.
+
+
+CHANGE	The "User and paths" report hide any path
+	deactivated by VfSys. They will now show
+	up as "INACTIVE". Also, the 'R' and 'H'
+	flags will now show the users real 
+	Root and Home paths (and not all the paths
+	that had the Home or Root flag set).
+
+BUGFIX	FTP clients that split the command messages
+	into several TCP packages could both confuse and
+	make the server crash.
+	Assumed fixed (I can't test it).
+
+BUGFIX	The FTP command parser used a 256 byte buffer.
+	The recommended size is "at least" 4 KB.
+	Buffer size increased to 8 KB.
+	(And to the hackers...: Sorry, you can't
+	overload that buffer :-)
+
+BUGFIX	The OLE support for .lnk shortcuts (if not
+	using VfSys) was broken when the server went
+	multithreading (0.14a).
+	Fixed.
+
+BUGFIX	If you had VfSys running, created a new user,
+	and then added some paths for the user, the
+	paths would simply disappear the next time
+	the server was started.
+	The problem was that a flag that tells the
+	save() function to convert from VfSys paths
+	to DOS paths was not set correctly. The
+	paths was saved as VfSys paths and therefore
+	invalid. If you have seen this problem
+	do the following:
+	  1) Take the server off-line
+	  2) Stop VfSys
+	  3) Go trough the users and delete
+	     any non-DOS path (except "\").
+	The problem is now fixed.
+
+BUGFIX	When running without VfSys, and a X:\ style
+	path was root, mapped directories would
+	not show up in the directory listing.
+	Fixed.
+
+BUGFIX	When running without VfSys, and the root dir
+	was not mapped, CD / would fail.
+	Fixed. (It now maps to the root path).
+
+BUGFIX	When using Netscape Navigator, you sometimes
+	had to re-load the page to see the directory-
+	listing. 
+	Fixed.
+
+BUGFIX	Sometimes mapped directories would show up in the
+	directory listings as *files*, not directories.
+	Fixed.
+
+------------------------------
+V. 0.18a ALPHA June 17. 1996
+------------------------------
+
+ADDED	SITE: WHO SHUTDOWN ENABLE DISABLE MSGU OPEN
+	CLOSE ANON KICK
+	Also: "HELP SITE"
+
+ADDED	Security tab for Site commands completed.
+
+ADDED	Sound support on some events. You can visit
+	http://www.sky.net/~jdeshon/joewav.html for a
+	large number of cool sounds to use.
+
+BUGFIX	The multithreading support in the Virtual File System
+	sometimes caused the old cache to remain allocated when
+	it was restarted. (Problems with the Lock counters).
+	This could lead to a huge waste of memory and also
+	loss of information (uploader, download count etc.)
+	Fixed.
+
+BUGFIX	NT did not always flush the VfSys .Index.txt files,
+	causing information (uploader, download count etc.)
+	to be lost.
+	Fixed
+
+BUGFIX	If a user issued a SITE command when the spy
+	windows was active, the server could crash.
+	Fixed
+
+BUGFIX	Sometimes the server would crash when spying on users
+	while they logged on.
+	Fixed
+
+
+------------------------------
+V. 0.17a ALPHA June 16. 1996
+------------------------------
+
+ADDED	Tool-tip for the toolbar.
+
+ADDED	Clear log-window command.
+
+ADDED 	System Priority to the Options tab.
+
+ADDED	Feature to prevent the server from starting several
+	instances of the program from the same directory.
+
+CHANGE	In the current design of the File Access tab
+	there are some ambigous situations.
+	If the \ path is defined as roor + home, all
+	users will have access to all files, also
+	unprivileged users with another root path.
+	I have now denied access to un-mapped
+	paths before the users root-level, if the
+	root path has the mapping flag set.
+	In other words: If you have given a default
+	path of \ + root, and anonymoys \ftp\files + root
+	+ map, the anonymous user will not get access to 
+	anything above \ftp\files, unless the paths are
+	mapped. If they are mapped, they will show up
+	as links in the users root directory 
+	(\ftp\files\path)
+
+BUGFIX	Removed some minor memory leaks. (< 1 KB total)
+
+BUGFIX	Corrected the header name for sysmsg6.txt in the
+	View Messages tab.
+
+BUGFIX	DOS paths like C:\ + map did not show up in the
+	listings in the users root-dir.
+	Fixed.
+
+BUGFIX	The rename function in the server would move files
+	to the servers home directory, rather than renaming
+	the files when running without the VfSys.
+	Fixed.
+
+BUGFIX	Removed a ':' after 'total' in the LIST output to
+	make Netscape Navigator even more happy.
+	
+
+------------------------------
+V. 0.16a ALPHA June 11. 1996
+------------------------------
+
+ADDED	Validiation of "email as password". The server
+	does a basic check to ensure that the password
+	has a email-like syntax (something@).
+	WWWuser@ will be accepted.
+
+BUGFIX	There was a bug in VfSys's links when the links
+	was to directories. CD worked all right, but 
+	the list command would sometimes show partially
+	listings of the parent dir.
+	Fixed.
+
+BUGFIX	Deletion of directories did not work.
+	Fixed.
+
+BUGFIX	If VfSys was not running and you had "\" as root path, 
+	the intetranl path repersentation would be wrong on
+	mapped paths, causing all files to be unavailable for
+	access.
+	Fixed.
+
+BUGFIX	Fiexd a problem with the drive paths showing up as
+	/c /d etc. if "\" was root dir and VfSys was not running.
+
+
+TEST	I got a report that there is a 45 sec. delay from 
+	the password is given to the user get logged in when
+	the server is running under NT 3.51.
+	I am not able to reproduse this delay.
+
+------------------------------
+V. 0.15a ALPHA June 10. 1996
+------------------------------
+
+Note: I finally changed the name. The name of the server is
+war-ftpd. From now on the .zip file will contain the version 
+number.
+
+Note: The setup information is moved from tFTPd32.ini to
+FtpDaemon.ini, and many of the option names has changed.
+When you install the new version, you must go into the
+Properties/Options tab and configure the system.
+
+ADDED	Minimize option at startup
+
+ADDED	Password protection of the servers main window.
+	If you enable this option, you must have a 
+	login account (FTP user) that belong in the
+	Sysadmin class, and you better remember his
+	password :-)
+	If you fail to get the main window back, shut
+	down the server from the tray-icon menu and
+	set the "Protected" value in FtpDaemon.ini
+	to 0.
+
+ADDED	Option to disable recursive directory listings
+
+ADDED	Option to disable output of the download counter
+	on the files in a directory.
+	(The download count shows up in the .Index.txt
+	files and if the user calls LIST -I)
+
+CHANGE	Moved most of the setup dialogs to a new tab.
+
+BUGFIX	Removed a possible cause of access violation.
+
+BUGFIX	Some minor bugs are fixed.
+
+------------------------------
+V. 0.14.1a ALPHA June 9. 1996
+------------------------------
+
+ADDED	Multicolumn "-C" option to LIST
+
+ADDED	DOS path to the SPY dialog when running VfSys.
+
+ADDED	MDTM command. Reports the filedate in ascii. This is
+	used by some FTP clients and WEB browsers.
+
+ADDED	TYPE L 8 command is now recognized. Used by some
+	MAC FTP clients.
+
+CHANGE	Added better precision on the KB/Sec upload/
+	download info.
+
+BUGFIX	The Dupe Checker did not work.
+	Fixed
+
+BUGFIX	VfSys was not able to follow it's own paths when
+	a directory was a link.
+	Fixed
+
+BUGFIX	If the VfSys path was "C:\;d:\" (in stead of
+	"C:\,c-drive;D:\,files") users
+	would be refused on login with the message
+	"Access denied to homedir".
+	Fixed
+
+BUGFIX	The VfSys would flush each second in stead of
+	each 7. minute. 
+	Fixed
+
+BUGFIX	If the users root dir was \ and it was mapped, 
+	the paths reported by PWD would be wrong.
+	Fixed.
+
+BUGFIX	Fixed problem with long response messages
+	that were broken up without sending a '-' after
+	the response number.
+
+BUGFIX	Removed empty lines in response messages.
+
+BUGFIX	Removed a trailing 0 in the LIST output. This
+	zero caused big problems with ncftp.
+
+------------------------------
+V. 0.14.a ALPHA June 5. 1996
+------------------------------
+
+The big news this time is the new Virtual File System.
+Please note that the .Index.txt file format has changed and
+that the server no longer will understand the old format.
+(This does not affect the user database and the information
+stored there).
+Please read the page describing the Virtual File System in the
+supplied documentation file (tFTPd32.rtf).
+
+I expect this release to be buggy and unreliable. Please report 
+any problems. New versions will be available rapidly in the next
+two weeks. But I need to get the problems reported before I can
+fix them :-)
+
+Note: The UNIX ln command was announced for this verion. There
+were some problems, so the command will have to wait a bit.
+
+
+ADDED	Multithreading.
+
+ADDED	Full pattern matching and recognition of most UNIX
+	ls line parameters on the LIST command.
+	Note: Multi-coloum output and sorting are still not
+	ready.
+	Mget should now work 100%.
+
+ADDED	Site commands for simplified implementations of the
+	following UNIX commands: chmod, chgrp, chown
+
+ADDED	Free Download of selected files (require the Virtual
+	File System to be running).
+	Note: Statistics are not counted for free files.
+
+ADDED	Dupe checker. The dupe checker will only work when the 
+	virtual file system is running.
+	(The dupe checker will deny upload of filenames that
+	are known by the virtual file system if the "deny" option
+	is enabled in the Properties/Security/Banned Files tab.)
+
+ADDED	Popup-menu when right clicking on the tray icon.
+
+CHANGE	The log will now only be opened when there are data to
+	be written.
+
+CHANGE	The logfile is now only opened when there is something
+	to write to the log.
+
+CHANGE	When the user database is saved the server now writes to
+	a temporary file. When the file is successfully written
+	the old database file is saved with the name
+	"FtpDaemon.dat.bak".
+
+CHANGE	The server no longer gives any message if the user
+	IP is denied by absolute denial in the default setup.
+	Cute-ftp will "hang" until it time out. Ws_ftp will
+	detect that the connection is closed and report
+	"connection failed". I have not tested with other
+	FTP clients. however, this is the way most FTP servers
+	handle denied IP addresses.
+
+CHANGE	The tooltip text on the tray icon will now show the 
+	port the server is listening to, to ease use of
+	multiple servers.
+
+CHANGE	Cosmetic change when selecting users in the user list
+	on the main console. You can now select a user by
+	clicing on any coloumn, and the entire row will be
+	colored. Also added sorting of any coloumn by clicking
+	at the coloumn header.
+
+CHANGE	The Rename functions will now also rename directories
+
+CHANGE	Resized the toolbar buttons to standard Windows apps.
+	size.
+
+BUGFIX	Upon receiving, the server would generate a number
+	of wasted internal notification messages.
+	Fixed.
+
+BUGFIX	Changing a file to a new name, and then back to the 	
+	original name would fail due to a bug in one of the
+	standard libraries. 
+	Fixed.
+
+BUGFIX	The .lnk files would use the DOS 8.3 name conversion
+	for the destrination file.
+	Fixed.
+
+------------------------------
+V. 0.13a ALPHA April 6. 1996
+------------------------------
+
+
+UTILITY	Due to some instability in the 0.12a version, I
+	have included the "chksvr" utility in the standard
+	distribution. See chksvr.txt for details.
+
+CHANGE	[$ulcount] and [$dlcount] will now show files or bytes,
+	depending on the users current U/D restriction type.
+	(There will be added new macros for explicit file and
+	byte information)
+
+CHANGE	Changed byte counters to be Kbytes counters to allow
+	larger totals. The largest number the counters can
+	keep now are 2,147,483,647 Kbytes.
+	Please verify that the conversion from bytes to Kbytes
+	are done ~right... (Keep a copy of your old database
+	file in case there are bugs - I'll fix this right away).
+
+CHANGE	Corrected spelling in [$programname] macro
+
+CHANGE	Resized the width of the main window to fit
+	within 640 x 480 (VGA) resolution. Now all
+	the options are displayed, also on low-res
+	monitors.
+
+CHANGE	When the Absolute option is used on the default
+	IP access list, the system will no longer scan
+	the default IP access list when verifying if a 
+	user is denied access. This because he not would
+	have made it to the login prompt if he was denied
+	in the default IP access list.
+	Else, If you denied everyone, and let some masks 
+	get trough in the default setup, all users within 
+	the allowed masks would get access, no matter what
+	was specified on the user/group/class level.
+	(The access first scans all the lists for denial,
+	and if the user is denied, all lists for an
+	exception.)
+
+CHANGE	Added logic to not update the users counters
+	(Upload, Download, Logins etc.) unless these
+	fields actually had been edited, when the user
+	properties was updated. 
+	The side effect of updating it all was that users
+	who were online could get their counters reset to
+	the values present prior to the change, even when
+	the changes were made in the file properties or
+	IP access list.
+
+BUGFIX	Sometimes the client area of the list-boxes in the
+	User maintenance/Security dialogs was grayed out.
+	I tracked this down to a bug/feature in Windows
+	and instructed windows to leave the areas alone :-)
+	Assumed fixed.
+
+BUGFIX	Sometimes the server would report en error on
+	successfully uploaded files. I believe this bug
+	was caused by a change in the Winsock design in
+	NT 4.0. 
+	Assumed fixed.
+
+BUGFIX	When deleting users, the server would crash in
+	some situations (due to an uninitialized pointer).
+	Fixed.
+
+BUGFIX	PASV would use 127.0.0.1 as the IP address
+	to the server, instead of the actual IP
+	address. The result was that Netscape
+	Navigator/MS Internet Explorer failed to
+	get files.
+	Fixed. It will now use the IP address the
+	user logged in to, thus hiding other IP
+	addresses from users logging in to a virtual
+	multihoming server.
+
+
+------------------------------
+V. 0.12a ALPHA April 30. 1996
+------------------------------
+
+Note: 	I still have some bugs to work on, but release
+	this version now to help the sites that have
+	had problems with the library bug.
+	A new release with more bugfixes will follow
+	in a day or two...
+
+
+ADDED:	Absolute option in Default IP deny list.
+	IP's on the default list will be disconnected
+	at once if this option is set. This makes the
+	server behave like all other FTP servers with
+	IP access lists.
+	The other IP deny/access lists will behave like
+	before. (The server checks the IP number against
+	the user/group/class *and* default list after
+	the user has given his name.)
+	There has been many requests for this dual
+	functionality so I moved it up on my todo-list :-)
+
+ADDED:	SITE ICON command. Will force the server to add a
+	new system try icon. Added to re-enable contact
+	with the system console after Explorer crash in
+	NT 4.0.
+	This command is only available for users in the
+	"Sysadmin" class.
+
+TEST:	A problem was reported when deleting groups. I have
+	not been able to reproduce this.
+
+BUGFIX:	A bug in the Microsoft socket library was verified
+	and a workaround made. The system should now be
+	rock solid on high-impact systems, also under
+	Win95.
+
+
+
+------------------------------
+V. 0.11a ALPHA April 26. 1996
+------------------------------
+
+ADDED:	Multihosting feature. See "Multih.txt" for details.
+
+CHANGE:	Some cosmetic improvements.
+
+CHANGE:	Changed the user list from ListBox to ListCtrl/report
+	mode. This was not the trivial task I had thought!
+	Thanks to Microsoft's poor documentation, I spent
+	7 hours before this list started to work. 
+
+	Note: When the listCtrl looses focus, the selected
+	user is no longer highlighted. I have no idea of
+	how to work around this. To make it a little
+	easier to maintain the users online, I have added
+	a pop-up menu that pops up if you click on a 
+	user # with the right mouse button.
+
+CHANGE:	Moved system message from Notepad to tabbed dialog.
+
+BUGFIX:	When using space + '.' in the paths the user could 
+	sometimes get around some of the security checking.
+	Fixed.
+
+BUGFIX:	When pressing the [EDIT] button in the main window, the
+	server would crash. 
+	Fixed.
+
+
+------------------------------
+V. 0.10a ALPHA April 25. 1996
+------------------------------
+
+ADDED:	sysmsg9: Shows status info after up/download.
+
+ADDED:	Dialog popping up after Killing a user, asking
+	if the user should be refused in the future.
+
+ADDED:	4 new views of the security dialog.
+
+TEST:	There has been messages on Usenet about problems with
+	WinSock and large files. I tested transmission of 
+	10MB+ files between a NT Server and my own Win95 PC,
+	running the FTP server on my own machine.
+	I experienced problems with the control channel.	
+	Cute-FTP sometimes failed to receive the directory
+	listing after uploading the lage file. I made some 
+	changes in the FTP engine in the server, without
+	resolving the problem. I was also able to reproduce
+	the problem with other FTP clients. 
+	When I ran the same test under NT, there was no 
+	problems at all. I suspect this error to
+	be in the Win95 Winsock .dll *or* in the C++
+	liberaries I use. If there are bugs in the libraries
+	I will probarbly have to write my own low-level
+	network lib...
+
+ADDED:	Toolbar
+	Note: I have not been able to get the tooltip feature
+	to work yet.
+
+CHANGE:	The user list will now show "idle", "Upload" and "Download".
+
+CHANGE:	The server now looks for a ".message.ftp.txt" in it's
+	startup directory if the file not can be found in the
+	usres current directory.
+	This gives the option of a standard directory change 
+	message	for all dirs that don't have their own message.
+
+------------------------------
+V. 0.9a ALPHA April 22. 1996
+------------------------------
+
+ADDED:	Reverse DNS lookup. (Has not been able to test it.)
+
+ADDED:	User Up/Download statistics. (10 on top)
+
+ADDED:	Bug report form in the help menu. Please use this
+	when reporting bugs. It provides info that speeds
+	up the work of tracing the problems.
+
+CHANGE:	The user database is flushed to disk every 10 minutes.
+
+TEST:	I received a report that the password given when a user
+	is created did not work. I was able to reproduce the
+	problem, but when I started to trace it, the problem
+	went away. I have not been able to reproduce it
+	with 0.9a. Please keep an eye on this feature.
+
+TEST:	I received a report that the server would require 2
+	uploaded files when the Up/Download limits was set
+	to 1 : 2 *bytes*. I was not able to reproduce the
+	problem in version 0.9a
+
+TEST:	I got a report that the server would crash if scandisk
+	was started when it was running. I ran scandisk with
+	no problems with the file system idle.
+
+BUGFIX:	The "alias" name in the File Security tab was not always
+	updated after a change. 
+	Fixed.
+
+BUGFIX:	In version 0.6a, when the design of the file system
+	changed, a new bug was introduced. It was not possible
+	to CD to a mapped dir if the root dir was a drive
+	i.e. C:\ The CD would only work if the home dir was
+	somewhere down in a sub-directory.
+	Another related problem was that when the system was using 
+	DOS mode in dir listings/paths, it was not possible to
+	"CD \" and get to the root dir.
+	[The path parsing functions, supporting DOS/UNIX style 
+	paths + OLE .lnk files + mappings are now among the most
+	advanced and complex parts of the server]
+	Fixed.
+
+BUGFIX:	When the spy dialog was closed with the [x] button, or
+	by pressing the [ESC] key, it was not possible to
+	spy on that user again.
+	Same behavior is reported when closing a minimized
+	soy window.
+	Fixed.
+
+BUGFIX:	Traced down a memory leak that would allocate 8 KB
+	memory for each connection, and never release the
+	memory. There can still be memory leaks, but all I
+	have found in the current version is an unidentified 25 
+	bytes buffer that remains allocated from the server starts
+	till it is shut down.
+	ALPHA TESTERS: Please keep an eye on your system and
+	report if the system runs slower after a day or two
+	without stopping the server.
+
+BUGFIX:	The server did not handle write error's on incoming files
+	very well. It will now abort the file transfer.
+	Log files will not be written if disk errors occur.
+	The user database will be corrupted if the disk where
+	it remains gets full. It is not possible to update
+	the user database in this situation, and the situation
+	will not be discovered before the error occurs.
+	Therefore: Make sure to start the server from a disk
+	partition that will not run full. Let the users fill
+	up other partitions or drives.
+
+------------------------------
+V. 0.8a ALPHA April 17. 1996
+------------------------------
+
+UPDATE:	The dll's are updated to MSVC 4.1. If you are experiencing
+	problems with your existing dll's, get the dll .zip file.
+
+BUGFIX:	If max simultaneous users was specified on a user/group/class,
+	the user could not log in at all.
+	Fixed.
+
+BUGFIX:	Passwords added when the user was created was not stored. 
+	Fixed.
+
+BUGFIX:	If a user logged in right after he was created, but before
+	the internal tables were synchronized (happens when you press
+	the [OK] button in the security dialog), the system would
+	chrash.
+	Fixed.
+
+
+
+------------------------------
+V. 0.7a ALPHA April 16. 1996
+------------------------------
+
+ADDED:	(Win95) Icon in system tray. If the window is minimized, ESC 
+	pressed or the close [X] button pressed, the server will hide 
+	itself and only	be available by clicking on the icon in the 
+	system tray. The only way to stop the server is to use the 
+	menu and choose	Exit.
+
+ADDED:	Option in file system setup to disable the .Index.txt
+	file.
+
+BUGFIX:	When the system was offline and vfsys enabled, it would 
+	crash if the OK button in the file system options was
+	pressed.
+	Fixed.
+
+------------------------------
+V. 0.6a ALPHA April 14. 1996
+------------------------------
+
+ADDED:	Temporary hook to support "mget *" command.
+	NOTE: Regular pattern matching is still not supported,
+	only "*" can be used (ie. not *.txt etc..).
+
+ADDED: 	SITE MSG <message>
+	The message will show up on the main console.
+
+ADDED:	Menu bar on the main console.
+
+CHANGE:	Design change in user/group dialogs and internal design.
+	This includes a mass-implementation of new features.
+	NOTE: The file format has changed and the system can no longer
+	read or understand the database files of previous versions.
+	The .ini file is compatible with previous versions.
+
+CHANGE:	System database is now encrypted.
+
+CHANGE:	Virtual files (LIST, ".Index.txt") are now listed in the log
+	under the DEBUG flag (and will only show up if the logging if
+	DEBUG messages are enabled).
+
+CHANGE:	Filesize are added to the logs notification of successfull
+	transfer.
+
+CHANGE:	Main console is now resizable.
+
+BUGFIX:	All reported bugs are supposed to be fixed.
+
+------------------------------
+V. 0.5a ALPHA April 4. 1996
+------------------------------
+
+ADDED:	Extended access control. Now a user can be denied/allowed access 
+	on system wide, user class, user group and user level.
+	The access control module checks the access in this order:
+	1) Is the userclass anonymous, and anonymous access denied?
+	2) Is the userclass not root, and general access denied?
+	3) Is there user-level access permissions?
+	4) Is there group-level access permissions?
+	5) Is there userclass-level access permissions?
+	6) Is there permissions at all?
+	If there is defined access or not access, the processing stops and
+	the user is given access or denied. If the state is undetermined
+	(grayed check box), the next test is performed.
+
+	1 - 2 are defined with the checkbuttons on the system console
+	3 is a new button in the user dialog
+	4 is a new button in the group dialog
+	5 - 6 are new buttons in the system options dialog.
+	There is also a simple report available, listing the users and their
+	permissions. 
+
+	NOTE: Anonymous users can now be denied access from the system options
+	dialog, and from the system console. If they are denied access from
+	the system options dialog, users with userclass anonymous can still
+	log in if they are given explicit access in the user or group
+	dialogs. But if the button on the main console is pressed, they
+	are denied access no matter what the user or group settings says.
+
+
+ADDED:	OLE support for Win95 .lnk files. The .lnk files will show up
+	as mapped directories. 
+
+	NOTE1: The user must have permission to the directory in order
+	to access the link. But the directory does not need to be mapped to
+	the users homedir.
+	The .lnk support is intended to make it easier for the user to
+	navigate in the system, not to make an easy way to surpass
+	security.
+
+	NOTE2: I have successfully downloaded files that was linked with
+	this method. However, Cute-ftp and WS_FTP has a bug in their parsing
+	of the directory listings that make them treat any links as directories,
+	and (as far as I can see) has no direct method to download links that
+	points directly to files. To fix this problem I list links to regular
+	files as normal files, without the 'l' flag set.
+	When such files are downloaded the server reports the correct name, but
+	the FTP clients will use the filename.lnk name. The files will have to be 
+	manually renamed by the user after download.
+	***The user will still need to have permissions to the directory where 
+	the actual file is located.
+
+
+CHANGE:	Changed internal system time functions from GMT to local time zone.
+
+CHANGE:	Removed security restriction that denied creation of directories at the
+	root level. (MKD C:\NEWDIR)
+
+CHANGE:	The tab order of the system console and the Msg User dialog are changed.
+
+CHANGE:	Help is made the default button on the system console.
+
+BUGFIX:	The server would crash if a user logged in and the group he belonged to
+	not was found.
+	Fixed.
+
+BUGFIX:	The path parser will now detect (and skip) /./ in the path.
+
+BUGFIX:	The .message.ftp.txt files was not closed after use.
+	Fixed.
+
+
+------------------------------
+V. 0.4a ALPHA April 3. 1996
+------------------------------
+
+ADDED:	Users IP address to spy dialog.
+
+ADDED: 	Textfile to display as welcome message when changing directory.
+	The filename can be modified in the system setup dialog.
+	Default filename is ".message.ftp.txt"
+	The message file have support for macros
+	Tested with Cute-ftp, MS Internet Explorer and Netscape Navigator.
+
+ADDED:	Full support for mapping of dirs. to home. The path will now show
+	the path from the homedir if the user is in any path mapped to the
+	homedir. If i.e. D:\ is mapped to C:\FTP, you can say "CD /C/FTP/D/BIN"
+	and come to the D:\BIN directory. The server will report "/C/FTP/D/BIN"
+	as the current directory (or "/D/BIN") if home is mapped to root.
+
+ADDED:	PASV command implemented.
+
+ADDED:	UNIX style link output on "ls -l" on mapped dirs.
+
+ADDED:	"System type" option in system setup, UNIX or Real.
+	This applies to the SYST command. If "Real" is checked
+	the system will report the actual operating system
+	(WIN32 + WN95 or NT). If "UNIX" is checked, it will
+	report "UNIX Type: L8" (I have no idea about what L8 stands for,
+	but it appears that Netscape Navigator wont accept the "ls -l" LIST
+	format without this response).
+
+ADDED: 	"SIZE path" nonstandard FTP command implemented.
+
+ADDED:	Support for BINARY LIST transfer. (If UNIX file system, only newline are
+	sent as end-of-line marker).
+
+CHANGE:	The scrolling of the log window is changed. If the first line is selected
+	the first line will always be displayed on top. If another line is selected
+	then that selection will remain active, and new messages will not be visible 
+	before the window is scrolled up manually.
+
+CHANGE:	The program will now terminate at once when the EXIT button is pressed.
+	In previous versions the EXIT button set a flag that was polled once
+	a second (when the log window is updated). In some rare cases the timer
+	would not start, and the program would not respond to the EXIT
+	button at all. This is now fixed.
+
+CHANGE:	The output from the LIST command is now comforming 100% with UNIX 
+	standard (as far as there *is* such a thing...).
+
+CHK:	I got a report that permissions on the home dir. did not applied for the homedir.
+	I am not able to reproduce the problem. (Unless if I change the map parameter
+	when the user is online. The server does not handle that. If this happens,
+	the user must issue a "CD /" command to reset the FTP client's and the	
+	servers recognition of the current working directory.)
+
+CHK:	I got a report that uploaded files not was shown in the Spy xmit history
+	dialog. I am not able to reproduce the problem.
+
+FIX:	Goodbye message was not sent. 
+	Fixed.
+
+BUGFIX:	When using WS_FTP the server would sometimes show a wrong ".Index.txt"
+	file. The "problem" was that WS_FTP are optimizing speed by caching directory
+	information. The server was optimizing speed by not reading the directory
+	info into memory before the user issued a LIST command. What happened was that
+	the server kept a cache of the last directory read, containing the information
+	used to build the ".Index.txt" file, but sometimes for the wrong dir.
+	The servers cache is now trashed when the user issues a CWD command. It will
+	reload the directory info if the user want the ".Index.txt" file, even if
+	no LIST command is given.
+	Note: The ".Index.txt" file is created in memory, based on the cached 
+	directory information. The file length reported by LIST is just an estimate.
+	The server will *only* load the ".Index.txt" for the current directory.
+	If a path is given, it will try to open a real file named ".Index.txt".
+
+BUGFIX:	If a file with an attached comment were deleted, it would result
+	in a page protection fault.
+	Fixed.
+
+BUGFIX:	The server asked for password for users without password.
+	Fixed.
+
+BUGFIX:	If a user had a name that was not the same as any group, the program
+	would get a page protection fault.
+	Fixed.
+
+BUGFIX:	User-Group dialog: It was not possible to add a new path when it was
+	part of an already defined path i.e. Could not add "D:\" if "D:\tmp" was
+	defined.
+	Fixed.
+
+BUGFIX:	A rare condition in the optional dir. combo-box (invalid selection) would
+	lead to a page protection fault.
+	Fixed.
+
+BUGFIX:	Virtual File system: (LIST) Number of dirs was not updated when only
+	drives was shown (PWD=\ --> show dives in stead of dirs/files).
+	Fixed.
+
+BUGFIX: Serious problem with "CD /path/dir./../anotherdir". The path-parser did not
+	recognize the "/../" sequence, leaving the "anotherdir" open for access
+	with no access control.
+	Fixed.
+
+BUGFIX:	Sometimes the path was still shown as "/c/"
+	Fixed.
+
+BUGFIX:	"CD .." did not work very well if the current directory was "C:\"
+	Fixed.
+
+BUGFIX:	The server would not work with MS Internet Explorer and Netscape Navigator.
+	Fixed.
+
+BUGFIX:	The logfiles was not flushed at shutdown.
+	Fixed.
+
+BUGFIX:	Trying to delete an un-empty directory caused a page protection fault.
+	Fixed.
+
+BUGFIX:	Creating an existent directory (MKD) caused a page protection fault.
+	Fixed
+
+
+------------------------------
+V. 0.3a ALPHA March 31. 1996
+------------------------------
+
+ADDED:	Spy: History of file xmits for the current connection
+
+ADDED:	Spy: User-account and connection-only file counters
+
+ADDED: 	Macros for number of users online, max users online, 
+	number of anonymous users online and max anonumous 
+	users online.
+
+FIX:	"Locate cursor in first text filed in input dialogs"
+	Fixed.
+
+FIX:	"Blank user name should not be allowed"
+	Blank user and groupnames, and user and group names with
+	white space are now denied.
+
+FIX:	Macroes that displays current up/download counter will now
+	show session counters for session only for users with 
+	session only up/download class.
+
+FIX:	Deny access to directories with no permissions checked
+	If you want to deny access to a directory in the users
+	homepath (or one of the optional paths), you add the
+	directory you want to close as an optional path and
+	turn off all file/dir. permissions.
+
+FIX:	Small icon used MFC instead of tFTPd style icon.
+	Fixed.
+
+FIX:	Cute FTP and "resolve links" is not working.
+	The problem was that Cute-ftp sent a LIST -L
+	command, that is undocumented in the FTP specs.
+	I have added a hook to just ignore this parameter for now,
+	and it seems that Cute-ftp is quite happy with the
+	standard UNIX "ls -l" it gets back...
+
+BUGFIX: recognize CD "d:" and CD "d:\" as the same thing
+
+BUGFIX:	Unix style /c/ as current dir. is nonstandard and ugly
+	fixed. Will now display /c
+
+BUGFIX: Unix style CD /c/usr don't work
+	fixed.
+
+------------------------------
+V. 0.2a ALPHA March 30. 1996
+------------------------------
+BUGFIX: "MKDIR reports 501 permission denied"
+	This was not a bug, but rather a logical error.
+	RMDIR was probithed when the user did not have
+	access to subdir (Apply for subdirs checkbox).
+	The dialog will now disable the Rmdir and Mkdir
+	checkboxes when the Apply for subdirs checkbox
+	is unchecked.
+
+BUGFIX:	"Mapped drive did not show up in homedir"
+	Unable to reproduce this error. If it is a problem somewhere,
+	I guess it will be fixed when I complete the implementation
+	of mapped directories (scheduled to the next release).
+
+BUGFIX:	"NT, problem with zombie server"
+	Fixed.
+
+BUGFIX: "Win95, problem with displayed IP number when the PC is off-line."
+	Fixed.
+
+Added RFC 1123 4.1.3.1 support
+
+            FTP allows "experimental" commands, whose names begin with
+            "X".  If these commands are subsequently adopted as
+            standards, there may still be existing implementations using
+            the "X" form.  At present, this is true for the directory
+            commands:
+
+                RFC-959   "Experimental"
+
+                 * MKD        XMKD
+                 * RMD        XRMD
+                 * PWD        XPWD
+                 * CDUP       XCUP
+                 * CWD        XCWD
+
+            All FTP implementations SHOULD recognize both forms of these
+            commands, by simply equating them with extra entries in the
+            command lookup table.
+
+------------------------------
+V. 0.1a ALPHA March 29. 1996
+------------------------------
+
+Virtual file system is not fully implemented. It will start and run, but
+the server will not use it for any user services. Only the "comment on file"
+benefit of the virtual file system is supported.

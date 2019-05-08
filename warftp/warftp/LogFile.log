@@ -1,0 +1,10 @@
+[S 2018 12 19 23:23] WAR-FTPD 1.65 Copyright (c) 1996, 1997 by jgaa. WIN32 (NT)
+[S 2018 12 19 23:23] Unable to open user database. Autocreating new file.
+[S 2018 12 19 23:23] WAR-FTPD 1.65 Copyright (c) 1996, 1997 by jgaa. WIN32 (NT)
+[S 2018 12 19 23:23] Initializing ODBC log module...
+[E 2018 12 19 23:23] Failed to initialize the ODBC log module
+[S 2018 12 19 23:24] WinSock 2.0
+[S 2018 12 19 23:25] WAR-FTPD 1.65 Copyright (c) 1996, 1997 by jgaa. WIN32 (NT)
+[S 2018 12 19 23:25] Initializing ODBC log module...
+[E 2018 12 19 23:25] Failed to initialize the ODBC log module
+[S 2018 12 19 23:25] WinSock 2.0

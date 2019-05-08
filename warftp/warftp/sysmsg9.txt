@@ -1,0 +1,2 @@
+
+UL: [$ulcount] DL: [$dlcount] Ratio: [$ulratio]:[$dlratio] Credit: [$credit] [$ulctype]

@@ -1,0 +1,41 @@
+War Install Setup version 2
+War FTP Daemon
+War FTP Daemon
+War-ftpd
+1 1 1
+@@@Setup 0 0 0 0 0 0 0 <Install Dir>
+..\Redistr\Setup.exe (NULL) 0 (NULL)
+@Help Files 1 1 1 0 0 1 0 <Install Dir>
+g:\SRC\MSVC4\tFTPd32\Release\war-ftpd.cnt (NULL) 0 (NULL)
+g:\SRC\MSVC4\tFTPd32\Release\War-ftpd.hlp (NULL) 1 War FTP Daemon - Help
+@NT System DLL's 1 1 0 0 1 1 1 <Windows System Dir>
+..\Redistr\Ctl3d32.dll.nt Ctl3d32.dll 0 (NULL)
+E:\Bin\UTILS\War Install System\Redistr\Olepro32.dll (NULL) 0 (NULL)
+E:\Bin\UTILS\War Install System\Redistr\Msvcirt.dll (NULL) 0 (NULL)
+E:\Bin\UTILS\War Install System\Redistr\Msvcrt.dll (NULL) 0 (NULL)
+E:\Bin\UTILS\War Install System\Redistr\Msvcrt40.dll (NULL) 0 (NULL)
+E:\Bin\UTILS\War Install System\Redistr\Mfc42.dll (NULL) 0 (NULL)
+@ODBC logging (require MS-SQL server) 1 1 1 0 0 0 0 <Install Dir>
+G:\src\Msvc4\tFTPd32\CODBCLog\Release\CODBCLog.dll (NULL) 0 (NULL)
+@Program Files 1 1 1 0 0 1 1 <Install Dir>
+g:\SRC\MSVC4\tFTPd32\Release\Distribution\ReadMe.txt (NULL) 1 War FTP Daemon - ReadMe
+g:\SRC\MSVC4\tFTPd32\Release\war-ftpd.exe (NULL) 1 War FTP Daemon
+..\Redistr\uninstall.exe (NULL) 1 Uninstall War FTP Daemon
+g:\SRC\MSVC4\tFTPd32\Release\Distribution\ReleaseNotes.txt (NULL) 1 Release Notes
+@Sound Files 1 1 1 0 0 1 0 <Install Dir>
+g:\SRC\MSVC4\tFTPd32\log.wav (NULL) 0 (NULL)
+g:\SRC\MSVC4\tFTPd32\login.wav (NULL) 0 (NULL)
+g:\SRC\MSVC4\tFTPd32\msg.wav (NULL) 0 (NULL)
+@Source code 1 1 1 0 0 0 0 <Install Dir>
+g:\SRC\MSVC4\tFTPd32\ProcessZip\ProcessZip.cpp src\ 0 (NULL)
+@Utilities 1 1 1 0 0 1 0 <Install Dir>
+g:\SRC\MSVC4\tFTPd32\sysmsg9.txt samples\ 0 (NULL)
+g:\SRC\MSVC4\tFTPd32\unzip.exe (NULL) 0 (NULL)
+g:\SRC\MSVC4\tFTPd32\ProcessZip\Release\ProcessZip.exe (NULL) 0 (NULL)
+@Win95 System DLL's 0 0 1 0 1 1 1 <Windows System Dir>
+..\Redistr\Ctl3d32.dll.Win95 Ctl3d32.dll 0 (NULL)
+E:\Bin\UTILS\War Install System\Redistr\Olepro32.dll (NULL) 0 (NULL)
+E:\Bin\UTILS\War Install System\Redistr\Msvcirt.dll (NULL) 0 (NULL)
+E:\Bin\UTILS\War Install System\Redistr\Msvcrt.dll (NULL) 0 (NULL)
+E:\Bin\UTILS\War Install System\Redistr\Msvcrt40.dll (NULL) 0 (NULL)
+E:\Bin\UTILS\War Install System\Redistr\Mfc42.dll (NULL) 0 (NULL)
